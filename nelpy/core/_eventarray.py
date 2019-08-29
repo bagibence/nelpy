@@ -750,7 +750,9 @@ class EventArray(BaseEventArray):
                 # no restriction on interval
                 return self
 
-        newintervals = self._abscissa.support[intervalslice].merge()
+        newintervals = self._abscissa.support[intervalslice]
+        if newintervals != newintervals.merge():
+            logging.warning('There are overlapping intervals')
         if newintervals.isempty:
             logging.warning("Index resulted in empty interval array")
             return self.empty(inplace=True)
